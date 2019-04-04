@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Домашно №3</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="ajax_response.js"></script>
+    <link href="style.css" type="text/css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Данни за студент</h1>
+        <p>Моля попълнете данните за студента:</p>
+        <form id="studentForm">
+            <hr>
+            <label for="nameStudent"><b>Име на студент</b></label>
+            <input id="namest" type="text" placeholder="Име на студент" name="nameStudent" minlength="1"
+                maxlength="200">
+
+            <label for="fnStudent"><b>Факултетен номер</b></label>
+            <input id="fnst" type="number" placeholder="Факултетен номер" name="fnStudent" min="62000" max="62999">
+
+            <label for="gradeStudent"><b>Оценка</b></label>
+            <input id="grst" type="number" placeholder="Оценка" name="gradeStudent" min="2" max="6" step=".01">
+            <hr>
+            <button type="submit" class="registerbtn">Запис</button>
+        </form>
+    </div>
+    <br>
+    <div id="result"></div>
+    <div id="errors"></div>
+    <br>
+    <table id="table">
+        <tr id="tr">
+            <th>Име на студент</th>
+            <th>Факултетен номер</th>
+            <th>Оценка</th>
+        </tr>
+    </table>
+</body>
+
+</html>
