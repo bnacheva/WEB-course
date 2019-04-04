@@ -1,3 +1,3 @@
 # Simple PHP Ajax Form Validation
 
-Server side php validation using jquery ajax request.
+Server side PHP validation using jQuery AJAX request.
