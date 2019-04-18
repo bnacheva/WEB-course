@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta charset="utf-8" />
+	<title>Регистрация</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="http://bladephp.co/download/js/jquery.validate.min.js"></script>
+	<script src="validation.js"></script>
+	<link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+	<form action="ajax.php" method="post" id="register-form">
+		<div class="container">
+			<div class="title">
+				<h1>Регистрация</h1>
+			</div>
+			<input type="text" placeholder="Потребителско име" name="username">
+			<input type="password" placeholder="Парола" name="password">
+			<input type="password" placeholder="Повтори паролата" name="passwordagain">
+			<button type="submit" name="submit" class="buttonreg">Регистрация</button>
+		</div>
+	</form>
+</body>
+
+</html>
