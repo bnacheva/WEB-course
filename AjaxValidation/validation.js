@@ -13,7 +13,6 @@ $(function () {
 				minlength: 6
 			},
 			passwordagain: {
-				required: true,
 				match: true
 			}
 		},
@@ -30,7 +29,6 @@ $(function () {
 				minlength: "Паролата трябва да бъде поне 6 символа.",
 			},
 			passwordagain: {
-				required: "Паролата е задължително поле.",
 				match: "Паролите трябва да съвпадат."
 			},
 		},
@@ -56,6 +54,6 @@ $(function () {
 		return this.optional(element) || /^[a-z]+[A-Z]+[0-9]+$/i.test(value);
 	}, "Паролата трябва да съдържа задължително поне 1 главна, 1 малка буква и 1 цифра.");
 	jQuery.validator.addMethod("match", function (value, element) {
-		return this.password == this.passwordagain;
+		return this.password.value == this.passwordagain.value;
 	}, "Паролите трябва да съвпадат.");
 });
