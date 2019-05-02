@@ -1,4 +1,4 @@
-$(function () {
+$(function validate() {
 	$("#register-form").validate({
 		rules: {
 			username: {
@@ -9,11 +9,12 @@ $(function () {
 			},
 			password: {
 				required: true,
-				chars: true,
-				minlength: 6
+				minlength: 6,
+				chars: true
 			},
 			passwordagain: {
-				match: true
+				required: true,
+				equalTo: "#password"
 			}
 		},
 		messages: {
@@ -26,10 +27,11 @@ $(function () {
 			password: {
 				required: "Паролата е задължително поле.",
 				chars: "Паролата трябва да съдържа задължително поне 1 главна, 1 малка буква и 1 цифра.",
-				minlength: "Паролата трябва да бъде поне 6 символа.",
+				minlength: "Паролата трябва да бъде поне 6 символа."
 			},
 			passwordagain: {
-				match: "Паролите трябва да съвпадат."
+				required: "Трябва да потвърдите паролата.",
+				equalTo : "Паролите трябва да съвпадат."
 			},
 		},
 
@@ -40,20 +42,16 @@ $(function () {
 				data: $(form).serialize(),
 				dataType: "json",
 				success: function (response) {
-					alert(response.message);
-					location.reload();
+					$("#register-form")[0].reset();
 				}
 			});
 		}
 	});
 
 	jQuery.validator.addMethod("specialchars", function (value, element) {
-		return this.optional(element) || /^[a-zA-Z_]+$/i.test(value);
+		return this.optional(element) || /^[a-zA-Z0-9_]+$/i.test(value);
 	}, "Само букви, цифри и _.");
 	jQuery.validator.addMethod("chars", function (value, element) {
-		return this.optional(element) || /^[a-z]+[A-Z]+[0-9]+$/i.test(value);
+		return this.optional(element) || /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{6,}$/i.test(value);
 	}, "Паролата трябва да съдържа задължително поне 1 главна, 1 малка буква и 1 цифра.");
-	jQuery.validator.addMethod("match", function (value, element) {
-		return this.password.value == this.passwordagain.value;
-	}, "Паролите трябва да съвпадат.");
 });
