@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="sidenav">
+        <a href="#start">1. Начало</a>
+        <ul class="submenu">
+            <a href="#begin">1.1. Увод</a>
+            <a href="#usage">1.2. Начин на използване</a>
+            <a href="#browser">1.3. Браузъри</a>
+        </ul>
+        <a href="#touch">2. HammerJS</a>
+        <ul class="submenu">
+            <a href="#touch">2.1. Touch-действие</a>
+            <a href="#failure">2.2. Проблеми</a>
+            <a href="#tips">2.3. Съвети и добри практики</a>
+            <a href="#compare">2.4. Сравнение с други библиотеки</a>
+            <a href="#sites">2.5. Сайтове, използващи HammerJS</a>
+        </ul>
+        <a href="#functions">3. Функции</a>
+        <ul class="submenu">
+            <a href="#pan">3.1. Pan</a>
+            <a href="#pinch">3.2. Pinch</a>
+            <a href="#press">3.3. Press</a>
+            <a href="#rotate">3.4. Rotate</a>
+            <a href="#swipe">3.5. Swipe</a>
+            <a href="#tap">3.6. Tap</a>
+        </ul>
+        <a href="#literature">4. Цитирана литература</a>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSd65R9oV1MZZC9mfIP3w0wDuwqgy3LLnUPcfdQ_kQAsZ7OK0g/viewform?usp=sf_link"
+            target="_blank">5. Тест</a>
+        <a href="#about">6. За мен</a>
+    </div>
+
+    <div class="main">
+        <div class="medium-9 columns">
+            <h1 id="start">HammerJS</h1>
+            <img id="logo" class="logo" src="img/logo.png" alt="Logo">
+            <br>
+            <br>
+            <br>
+            <br>
+            <hr>
+            <h2 id="begin">Увод</h2>
+            <p>HammerJS е JavaScript библиотека с отворен код,
+                която може да разпознава
+                жестове, направени от <code class="highlighter-rouge">touch</code>,
+                <code class="highlighter-rouge">mouse</code> и
+                <code class="highlighter-rouge">pointerEvents</code>.
+                Интересен факт е, че HammerJS и всички свързани с нея библиотеки, са разработени изцяло
+                от доброволци: Alexander Schmitz (ръководител на проекта),
+                Chris Thoburn, Jorik Tangelder (създател).
+            </p>
+            <hr>
+            <h2 id="usage">Начин на използване</h2>
+            <p>Използването на HammerJS е много лесно,
+                единтсвеното, което трябва да се направи, е да се добави библиотеката
+                и да се направи нова текуща инстанция.</p>
+            <div class="textcode">
+                <div class="highlight">
+                    <pre class="highlight"><code><span class="kd">var</span> <span class="nx">hammertime</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Hammer</span><span class="p">(</span><span class="nx">myElement</span><span class="p">,</span> <span class="nx">myOptions</span><span class="p">);</span>
+<span class="nx">hammertime</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">'pan'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">ev</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">ev</span><span class="p">);</span>
+<span class="p">});</span></code></pre>
+                </div>
+            </div>
+            <p>
+                По подразбиране HammerJS добавя набор от
+                <code class="highlighter-rouge">tap</code>,
+                <code class="highlighter-rouge">doubletap</code>,
+                <code class="highlighter-rouge">press</code>,
+                <em>horizontal</em>
+                <code class="highlighter-rouge">pan</code>
+                и <code class="highlighter-rouge">swipe</code>, и the
+                multi-touch <code class="highlighter-rouge">pinch</code> и
+                <code class="highlighter-rouge">rotate</code>
+                "разпознаватели на жестове". За по-кратко ще ги наричаме "функции".
+                <code class="highlighter-rouge">Pinch</code> и
+                <code class="highlighter-rouge">rotate</code> функциите
+                са неактивни по подразбиране, но можете да ги
+                активирате, като извикате:</p>
+            <div class="textcode">
+                <div class="highlight">
+                    <pre
+                        class="highlight"><code><span class="nx">hammertime</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="s1">'pinch'</span><span class="p">).</span><span class="kd">set</span><span class="p">({</span> <span class="na">enable</span><span class="p">:</span> <span class="kc">true</span> <span class="p">});</span>
+<span class="nx">hammertime</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="s1">'rotate'</span><span class="p">).</span><span class="kd">set</span><span class="p">({</span> <span class="na">enable</span><span class="p">:</span> <span class="kc">true</span> <span class="p">});</span></code></pre>
+                </div>
+            </div>
+
+            <p>Следват и начините за активиране на вертикално
+                или във всички посоки
+                разпознаване на <code class="highlighter-rouge">pan</code> и
+                <code class="highlighter-rouge">swipe</code> функциите:</p>
+
+            <div class="textcode">
+                <div class="highlight">
+                    <pre
+                        class="highlight"><code><span class="nx">hammertime</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="s1">'pan'</span><span class="p">).</span><span class="kd">set</span><span class="p">({</span> <span class="na">direction</span><span class="p">:</span> <span class="nx">Hammer</span><span class="p">.</span><span class="nx">DIRECTION_ALL</span> <span class="p">});</span>
+<span class="nx">hammertime</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="s1">'swipe'</span><span class="p">).</span><span class="kd">set</span><span class="p">({</span> <span class="na">direction</span><span class="p">:</span> <span class="nx">Hammer</span><span class="p">.</span><span class="nx">DIRECTION_VERTICAL</span> <span class="p">});</span></code></pre>
+                </div>
+            </div>
+
+            <p>
+                Препоръчва се също така и мета маркера на екранния прозорец,
+                който дава по-голям контрол върху уеб страницата, като
+                деактивира мащабирането.
+                По-новите браузъри, които поддържат свойството touch-action,
+                не изискват това.
+            </p>
+
+            <div class="textcode">
+                <div class="highlight">
+                    <pre
+                        class="highlight"><code><span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"viewport"</span> <span class="na">content=</span><span class="s">"user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1"</span><span class="nt">&gt;</span></code></pre>
+                </div>
+            </div>
+
+            <h3>Повече възможности</h3>
+            <p>
+                HammerJS ви дава възможност да настроите собствен
+                набор от "разпознаватели" или функции
+                за текущата инстанция, която сте създали.
+                Това естествено изисква малко повече код,
+                но пък за сметка на това, дава повече
+                контрол върху жестовете, които се разпознават.</p>
+
+            <div class="textcode">
+                <div class="highlight">
+                    <pre
+                        class="highlight"><code><span class="kd">var</span> <span class="nx">mc</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Hammer</span><span class="p">.</span><span class="nx">Manager</span><span class="p">(</span><span class="nx">myElement</span><span class="p">,</span> <span class="nx">myOptions</span><span class="p">);</span>
+    
+<span class="nx">mc</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="k">new</span> <span class="nx">Hammer</span><span class="p">.</span><span class="nx">Pan</span><span class="p">({</span> <span class="na">direction</span><span class="p">:</span> <span class="nx">Hammer</span><span class="p">.</span><span class="nx">DIRECTION_ALL</span><span class="p">,</span> <span class="na">threshold</span><span class="p">:</span> <span class="mi">0</span> <span class="p">})</span><span class="p">);</span>
+<span class="nx">mc</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="k">new</span> <span class="nx">Hammer</span><span class="p">.</span><span class="nx">Tap</span><span class="p">({</span> <span class="na">event</span><span class="p">:</span> <span class="s1">'quadrupletap'</span><span class="p">,</span> <span class="na">taps</span><span class="p">:</span> <span class="mi">4</span> <span class="p">})</span><span class="p">);</span>
+    
+<span class="nx">mc</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">"pan"</span><span class="p">,</span> <span class="nx">handlePan</span><span class="p">);</span>
+<span class="nx">mc</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">"quadrupletap"</span><span class="p">,</span> <span class="nx">handleTaps</span><span class="p">);</span></code></pre>
+                </div>
+            </div>
+            <p>Примерът по-горе, създава екземпляр, съдържащ <code class="highlighter-rouge">pan</code> и <code
+                    class="highlighter-rouge">quadrupletap</code> жест.
+                Те се изпълняват
+                в реда, в който са добавени.</p>
+        </div>
+        <hr>
+        <div class="medium-9 columns">
+            <h2 id="browser">Поддръжка от различни браузъри</h2>
+            <p>Не се притеснявайте, ако браузърът ви или операционната система,
+                която използвате
+                не са в списъка, HammerJS може да работи така или иначе!
+                Internet Explorer 8 и по-стари версии не се поддържат от HammerJS.</p>
+
+            <p>Браузърите, които имат вградена поддръжка за touch-action,
+                могат да имат подобрено поведение и разпознаване на жестовете,
+                в сравнение с браузърите, които нямат.</p>
+
+            <table id="table">
+                <thead>
+                    <tr>
+                        <th>Браузър</th>
+                        <th>Pan</th>
+                        <th>Pinch</th>
+                        <th>Press</th>
+                        <th>Rotate</th>
+                        <th>Swipe</th>
+                        <th>Tap</th>
+                        <th>Multi-user</th>
+                        <th>Touch-action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Windows Phone 8 - IE10</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                    </tr>
+                    <tr>
+                        <td>Android 2.3 - browser</td>
+                        <td>♥</td>
+                        <td>&nbsp;</td>
+                        <td>♥</td>
+                        <td>&nbsp;</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Android 2.3 - FireFox</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Android 4.x - browser</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Android 4.4 - browser</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                    </tr>
+                    <tr>
+                        <td>Android 4 - Chrome</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                    </tr>
+                    <tr>
+                        <td>Android 4 - Opera</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>?</td>
+                    </tr>
+                    <tr>
+                        <td>Android 4 - FireFox</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Android 4 w/ mouse</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>n/a</td>
+                    </tr>
+                    <tr>
+                        <td>iOS 6</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>iOS 7</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>iOS 8</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>BlackBerry 10</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>?</td>
+                        <td>?</td>
+                    </tr>
+                    <tr>
+                        <td>FireFox OS (simulator)</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>?</td>
+                        <td>?</td>
+                    </tr>
+                    <tr>
+                        <td>Desktop - IE11</td>
+                        <td>♥</td>
+                        <td>&nbsp;</td>
+                        <td>♥</td>
+                        <td>&nbsp;</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>&nbsp;</td>
+                        <td>♥</td>
+                    </tr>
+                    <tr>
+                        <td>Desktop - IE10</td>
+                        <td>♥</td>
+                        <td>&nbsp;</td>
+                        <td>♥</td>
+                        <td>&nbsp;</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>&nbsp;</td>
+                        <td>♥</td>
+                    </tr>
+                    <tr>
+                        <td>Desktop - IE9</td>
+                        <td>♥</td>
+                        <td>&nbsp;</td>
+                        <td>♥</td>
+                        <td>&nbsp;</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Desktop - Chrome</td>
+                        <td>♥</td>
+                        <td>&nbsp;</td>
+                        <td>♥</td>
+                        <td>&nbsp;</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>&nbsp;</td>
+                        <td>♥</td>
+                    </tr>
+                    <tr>
+                        <td>Desktop - Firefox</td>
+                        <td>♥</td>
+                        <td>&nbsp;</td>
+                        <td>♥</td>
+                        <td>&nbsp;</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Desktop - Opera</td>
+                        <td>♥</td>
+                        <td>&nbsp;</td>
+                        <td>♥</td>
+                        <td>&nbsp;</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>&nbsp;</td>
+                        <td>?</td>
+                    </tr>
+                    <tr>
+                        <td>Chromebook</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>?</td>
+                    </tr>
+                    <tr>
+                        <td>Windows 8 /w pen</td>
+                        <td>♥</td>
+                        <td>&nbsp;</td>
+                        <td>♥</td>
+                        <td>&nbsp;</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>n/a</td>
+                    </tr>
+                    <tr>
+                        <td>Windows 8 /w touch</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>n/a</td>
+                    </tr>
+                    <tr>
+                        <td>Windows 8 /w mouse</td>
+                        <td>♥</td>
+                        <td>&nbsp;</td>
+                        <td>♥</td>
+                        <td>&nbsp;</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>n/a</td>
+                    </tr>
+                    <tr>
+                        <td>Windows 8 /w mixed</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>♥</td>
+                        <td>n/a</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <hr>
+        <div class="medium-9 columns">
+            <h2 id="touch">Touch-действие</h2>
+            <p>Chrome 35+, IE10 + и FireFox, поддържат свойството
+                <code class="highlighter-rouge">touch-action</code>.
+                Това свойство "казва" на браузъра как да разпознава
+                докосванията на някакъв елемент.
+                Тo подобрява откриването и поведението на жестовете,
+                защото може да предотвратява прелистване на страницата
+                без изпълнение на JavaScript, което в някои случаи може да
+                доведе до грешки и неадекватно поведение.
+            </p>
+
+            <p>
+                HammerJS използва JavaScript fallback за
+                това свойство, когато е необходимо
+                така, че да може да работи и с браузъри, които не поддържат
+                HammerJS. И все пак, на някои (непопулярни) устройства,
+                JavaScript fallback може да не работи толкова добре,
+                колкото на устройства, които имат собствената поддръжка.</p>
+
+            <p>По подразбиране той задава стойност въз
+                основа на настройките на "разпознавателя", като можете да го предефинирате,
+                като зададете опцията
+                <code class="highlighter-rouge">touchAction</code>
+                на Manager.</p>
+
+            <p>Когато настроите touchAction на <code class="highlighter-rouge">auto</code>,
+                това не предотвратява никакви настройки по подразбиране и Hammer вероятно
+                ще прекъсне. Трябва да извикате
+                <code class="highlighter-rouge">preventDefault</code>
+                ръчно, за да поправите това. Трябва да
+                използвате това само ако знаете какво правите.</p>
+
+            <h3>Предпочитани стойности на touch-действията за всеки жест</h3>
+            <p>Ако все пак искате да зададете собствени стойности на всеки
+                от жестовете,
+                тогава таблицата долу би ви помогнала доста…</p>
+
+            <table id="table">
+                <thead>
+                    <tr>
+                        <th>Жест</th>
+                        <th>Най-малко ограничителни стойности на touch-действията</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>press</td>
+                        <td>auto</td>
+                    </tr>
+                    <tr>
+                        <td>tap</td>
+                        <td>auto</td>
+                    </tr>
+                    <tr>
+                        <td>multitap</td>
+                        <td>manipulation</td>
+                    </tr>
+                    <tr>
+                        <td>vertical pan/swipe</td>
+                        <td>pan-x</td>
+                    </tr>
+                    <tr>
+                        <td>horizontal pan/swipe</td>
+                        <td>pan-y</td>
+                    </tr>
+                    <tr>
+                        <td>rotate</td>
+                        <td>pan-x pan-y</td>
+                    </tr>
+                    <tr>
+                        <td>pinch</td>
+                        <td>pan-x pan-y</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <hr>
+        <div class="medium-9 columns">
+            <h2 id="failure">Възможни неуспехи и проблеми</h2>
+
+            <p>С метода <code class="highlighter-rouge">requireFailure()</code>
+                можете да накарате "разпознавателя" да
+                изчака повреда или неуспех на друг разпознавател,
+                преди да разпознае неговия жест.
+                Това може да се окаже полезно, когато искате да вложите два жеста един в друг,
+                като например <em>pan-horizontal</em> и <em>pan-vertical</em>.
+                Премахването на депенданситата може да се извърши с метода <code
+                    class="highlighter-rouge">dropRequireFailure()</code>.</p>
+
+            <div class="textcode">
+                <div class="highlight">
+                    <pre class="highlight"><code><span class="kd">var</span> <span class="nx">horizontal</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Hammer</span><span class="p">.</span><span class="nx">Pan</span><span class="p">({</span>
+    <span class="na">event</span><span class="p">:</span> <span class="s1">'panh'</span><span class="p">,</span>
+    <span class="na">direction</span><span class="p">:</span> <span class="nx">Hammer</span><span class="p">.</span><span class="nx">DIRECTION_HORIZONTAL</span>
+<span class="p">});</span>
+<span class="kd">var</span> <span class="nx">vertical</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Hammer</span><span class="p">.</span><span class="nx">Pan</span><span class="p">({</span>
+    <span class="na">event</span><span class="p">:</span> <span class="s1">'panv'</span><span class="p">,</span>
+    <span class="na">direction</span><span class="p">:</span> <span class="nx">Hammer</span><span class="p">.</span><span class="nx">DIRECTION_VERTICAL</span>
+<span class="p">});</span>
+<span class="nx">vertical</span><span class="p">.</span><span class="nx">requireFailure</span><span class="p">(</span><span class="nx">horizontal</span><span class="p">);</span>
+</code></pre>
+                </div>
+            </div>
+
+            <h3>Използване на requireFailure за разпознаване на множество жестове
+            </h3>
+
+            <p>Тъй като многократни жестове могат да бъдат разпознати едновременно
+                и даден жест може да бъде разпознат въз основа на неуспеха на други жестове.
+                Множество жестове
+                върху един и същ елемент могат лесно да бъдат разпознати по този начин:</p>
+
+            <div class="textcode">
+                <div class="highlight">
+                    <pre class="highlight"><code><span class="kd">var</span> <span class="nx">hammer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Hammer</span><span class="p">(</span><span class="nx">el</span><span class="p">,</span> <span class="p">{});</span>
+
+<span class="kd">var</span> <span class="nx">singleTap</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Hammer</span><span class="p">.</span><span class="nx">Tap</span><span class="p">({</span> <span class="na">event</span><span class="p">:</span> <span class="s1">'singletap'</span> <span class="p">});</span>
+<span class="kd">var</span> <span class="nx">doubleTap</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Hammer</span><span class="p">.</span><span class="nx">Tap</span><span class="p">({</span><span class="na">event</span><span class="p">:</span> <span class="s1">'doubletap'</span><span class="p">,</span> <span class="na">taps</span><span class="p">:</span> <span class="mi">2</span> <span class="p">});</span>
+<span class="kd">var</span> <span class="nx">tripleTap</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Hammer</span><span class="p">.</span><span class="nx">Tap</span><span class="p">({</span><span class="na">event</span><span class="p">:</span> <span class="s1">'tripletap'</span><span class="p">,</span> <span class="na">taps</span><span class="p">:</span> <span class="mi">3</span> <span class="p">});</span>
+
+<span class="nx">hammer</span><span class="p">.</span><span class="nx">add</span><span class="p">([</span><span class="nx">tripleTap</span><span class="p">,</span> <span class="nx">doubleTap</span><span class="p">,</span> <span class="nx">singleTap</span><span class="p">]);</span>
+
+<span class="nx">tripleTap</span><span class="p">.</span><span class="nx">recognizeWith</span><span class="p">([</span><span class="nx">doubleTap</span><span class="p">,</span> <span class="nx">singleTap</span><span class="p">]);</span>
+<span class="nx">doubleTap</span><span class="p">.</span><span class="nx">recognizeWith</span><span class="p">(</span><span class="nx">singleTap</span><span class="p">);</span>
+
+<span class="nx">doubleTap</span><span class="p">.</span><span class="nx">requireFailure</span><span class="p">(</span><span class="nx">tripleTap</span><span class="p">);</span>
+<span class="nx">singleTap</span><span class="p">.</span><span class="nx">requireFailure</span><span class="p">([</span><span class="nx">tripleTap</span><span class="p">,</span> <span class="nx">doubleTap</span><span class="p">]);</span>
+</code></pre>
+                </div>
+            </div>
+
+            <p>Когато някой жест изисква неуспех на друг, за да бъде разпознат,
+                неговият "разпознавател" ще изчака за кратко време, за да провери
+                дали другият жест е бил неуспешен. В този случай, не е задължително
+                неговото събитие, породено от подадения жест, да бъде
+                незабавно прекъснато.</p>
+        </div>
+        <hr>
+        <div class="medium-9 columns">
+            <h2 id="tips">Съвети и добри практики</h2>
+
+            <h3>Опитвайте се да избягвате функциите
+                <code class="highlighter-rouge">vertical pan</code> и
+                <code class="highlighter-rouge">vertical swipe</code></h3>
+            <p>Вертикалното плъзгане се използва за
+                скролване на страницата на вашия браузър и някои (по-стари) 
+                версии на определени
+                браузъри не изпращат събитията акуратно, така че HammerJS 
+                не може да разпознае тези жестове.
+                Възможен вариант е да се предостави алтернативен начин
+                за извършване на същото действие.</p>
+
+            <h3>Тестване на реално устройство</h3>
+            <p>Понякога HammerJS се нуждае от някаква фина настройка, 
+                като бързина и за по-лесно постигане, 
+                най-добре е функционалността да бъде изтествана 
+                на реално устройство. Също така,
+                за по-добра производителност на по-бавни устройства, 
+                се опитвайте да поддържате възможно най-прости обратни повиквания
+                на функциите.</p>
+
+            <h3>"Вече не мога да избера текста си!"</h3>
+            <p>HammerJS има настройки, за да подобри потребителския опит с
+                жестовете, които се разпознават върху браузърите.
+                Попринцип, декстоп браузърите "селектват"
+                текст, докато плъзгате върху страницата. Свойството <code
+                    class="highlighter-rouge">user-select</code>премахва това.
+                Това се прави с цел по-добра производителност.</p>
+
+            <div class="textcode">
+                <div class="highlight">
+                    <pre class="highlight"><code><span class="k">delete</span> <span class="nx">Hammer</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">cssProps</span><span class="p">.</span><span class="nx">userSelect</span><span class="p">;</span>
+</code></pre>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="medium-9 columns">
+            <h2 id="compare">Сравнение с други библиотеки</h2>
+            <p>
+                Естествено <code class="highlighter-rouge">HammerJS</code>
+                не е единтсвената библиотека, която се
+                използва за разпознаване на жестове.
+                Ще изброим и две други и ще я сравним с тях. Те са
+                <code class="highlighter-rouge">SwipeJS</code> и
+                <code class="highlighter-rouge">InteractJS</code>.
+            </p>
+            <ul>
+                <li>
+                    SwipeJS - SwipeJS е най-точният плъзгач за докосване.
+                    Той е изключително лек и работи на всички
+                    браузъри, включително IE7+.
+                    SwipeJS е библиотека написана на Vanilla JavaScript.
+                    Можете или да създадете нов екземпляр на
+                    SwipeJS, използвайки обикновен JavaScript,
+                    или да го инициализирате чрез предоставения метод от jQuery/Zepto
+                    (ако библиотеката вече е заредена на страницата).
+                    <h4>1. Vanilla Javascript</h4>
+                    <pre class="textcode"><code class="javascript hljs"><span class="hljs-keyword">var</span> element = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'mySwipe'</span>);
+<span class="hljs-built_in">window</span>.mySwipe = <span class="hljs-keyword">new</span> Swipe(element, {
+    startSlide: <span class="hljs-number">0</span>,
+    auto: <span class="hljs-number">3000</span>,
+    draggable: <span class="hljs-literal">false</span>,
+    autoRestart: <span class="hljs-literal">false</span>,
+    continuous: <span class="hljs-literal">true</span>,
+    disableScroll: <span class="hljs-literal">true</span>,
+    stopPropagation: <span class="hljs-literal">true</span>,
+    callback: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">index, element</span>) </span>{},
+    transitionEnd: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">index, element</span>) </span>{}
+});</code></pre>
+                    <h4>2. Използване на jQuery или Zepto</h4>
+                    <pre
+                        class="textcode"><code class="javascript hljs"><span class="hljs-built_in">window</span>.mySwipe = $(<span class="hljs-string">'#mySwipe'</span>).Swipe().data(<span class="hljs-string">'Swipe'</span>);</code></pre>
+                </li>
+                <li>
+                    InteractJS - InteractJS е JavaScript библиотека за
+                    <code class="highlighter-rouge">drag</code>,
+                    <code class="highlighter-rouge">drop</code>,
+                    <code class="highlighter-rouge">resizе</code> и
+                    <code class="highlighter-rouge">multi-touch</code>
+                    жестове, които са съвместими с модерните браузъри.
+                    Целта му е да представи последователно входните
+                    данни на "пойнтера" на потребителя в различните 
+                    браузъри и устройства
+                    и да предостави удобни начини за симулация,
+                    че "пойнтера" се премества по начин,
+                    който не е акуратен (счупване, инерция и т.н.).
+                    Имайте предвид, че InteractJS не премества елементи за вас.
+                    Стилизирането на елемент, така че да се движи,
+                    по време на плъзгане, трябва да бъде направено от
+                    вашите собствени слушатели на събития. По този начин вие
+                    контролирате всичко, което се случва.
+                    <pre lang="JS" class="textcode"><code><span class="token keyword">const</span> slider <span class="token operator">=</span> <span class="token function">interact</span><span class="token punctuation">(</span><span class="token string">'.slider'</span><span class="token punctuation">)</span>    <span class="token comment"></span>
+slider
+    <span class="token punctuation">.</span><span class="token function">draggable</span><span class="token punctuation">(</span><span class="token punctuation">{</span>                        <span class="token comment"></span>
+        origin<span class="token punctuation">:</span> <span class="token string">'self'</span><span class="token punctuation">,</span>                   <span class="token comment"></span>
+        inertia<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>                    <span class="token comment"></span>
+        modifiers<span class="token punctuation">:</span> <span class="token punctuation">[</span>
+            interact<span class="token punctuation">.</span>modifiers<span class="token punctuation">.</span><span class="token function">restrict</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+                restriction<span class="token punctuation">:</span> <span class="token string">'self'</span>            <span class="token comment"></span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span>
+        <span class="token punctuation">]</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'dragmove'</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">event</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  <span class="token comment"></span>
+        <span class="token keyword">const</span> sliderWidth <span class="token operator">=</span> interact<span class="token punctuation">.</span><span class="token function">getElementRect</span><span class="token punctuation">(</span>event<span class="token punctuation">.</span>target<span class="token punctuation">.</span>parentNode<span class="token punctuation">)</span><span class="token punctuation">.</span>width
+        <span class="token keyword">const</span> value <span class="token operator">=</span> event<span class="token punctuation">.</span>pageX <span class="token operator">/</span> sliderWidth
+        event<span class="token punctuation">.</span>target<span class="token punctuation">.</span>style<span class="token punctuation">.</span>paddingLeft <span class="token operator">=</span> <span class="token punctuation">(</span>value <span class="token operator">*</span> <span class="token number">100</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">'%'</span>
+        event<span class="token punctuation">.</span>target<span class="token punctuation">.</span><span class="token function">setAttribute</span><span class="token punctuation">(</span><span class="token string">'data-value'</span><span class="token punctuation">,</span> value<span class="token punctuation">.</span><span class="token function">toFixed</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>
+                </li>
+            </ul>
+        </div>
+        <hr>
+        <div class="medium-9 columns">
+            <h2 id="sites">Сайтове, използващи HammerJS</h2>
+            <p>Ще изброим и няколко сайтове, които използват HammerJS: </p>
+            <table>
+                <tbody>
+                    <tr>
+                        <td>1.</td>
+                        <td>
+                            <a rel="nofollow" href="http://as.com", target="_blank">as.com</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2.</td>
+                        <td>
+                            <a rel="nofollow" href="http://dash.cloudflare.com", target="_blank">dash.cloudflare.com</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3.</td>
+                        <td>
+                            <a rel="nofollow" href="http://allegro.pl", target="_blank">allegro.pl</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4.</td>
+                        <td>
+                            <a rel="nofollow" href="http://www.lefigaro.fr", target="_blank">lefigaro.fr</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>5.</td>
+                        <td>
+                            <a rel="nofollow" href="http://www.worldstarhiphop.com", target="_blank">worldstarhiphop.com</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>6.</td>
+                        <td>
+                            <a rel="nofollow" href="http://www.infobae.com", target="_blank">infobae.com</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>7.</td>
+                        <td>
+                            <a rel="nofollow" href="http://aajtak.intoday.in", target="_blank">aajtak.intoday.in</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>8.</td>
+                        <td>
+                            <a rel="nofollow" href="http://finance.yahoo.com", target="_blank">finance.yahoo.com</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>9.</td>
+                        <td>
+                            <a rel="nofollow" href="http://clients.boursorama.com", target="_blank">clients.boursorama.com</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>10.</td>
+                        <td>
+                            <a rel="nofollow" href="http://appsumo.com", target="_blank">appsumo.com</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <hr>
+        <div class="medium-9 columns">
+            <h1 id="functions">Функции</h1>
+            <img class="recognizer" src="img/recognizers.png" alt="Recognizers">
+            <p id="imgp">Функции - разпознаватели на жестове</p>
+            <hr>
+            <h2 id="pan">Hammer.Pan</h2>
+            <p>
+                Разпознава се, когато курсорът
+                се премества в
+                разрешената посока.</p>
+
+            <table id="table">
+                <thead>
+                    <tr>
+                        <th>Опция</th>
+                        <th>Стойност по подразбиране</th>
+                        <th>Описание</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>event</td>
+                        <td>pan</td>
+                        <td>Име на събитието.</td>
+                    </tr>
+                    <tr>
+                        <td>pointers</td>
+                        <td>1</td>
+                        <td>Необходим брой курсори.</td>
+                    </tr>
+                    <tr>
+                        <td>threshold</td>
+                        <td>10</td>
+                        <td>
+                            Необходимо минимално разстояние от
+                            панела преди разпознаването.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>direction</td>
+                        <td>DIRECTION_ALL</td>
+                        <td>Посока</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Съвместими събития</h3>
+            <ul>
+                <li>pan, заедно с всички изброени отдолу</li>
+                <li>panstart</li>
+                <li>panmove</li>
+                <li>panend</li>
+                <li>pancancel</li>
+                <li>panleft</li>
+                <li>panright</li>
+                <li>panup</li>
+                <li>pandown</li>
+            </ul>
+
+            <h3>Забележки</h3>
+            <p>Когато се извика метода <code class="highlighter-rouge">Hammer()</code>,
+                за да се създаде нова инстанция, <em>pan</em> и
+                <em>swipe</em> "разпознавателите" са конфигурирани да прихващат само
+                хоризонтални жестове.</p>
+
+        </div>
+        <hr>
+        <div class="medium-9 columns">
+            <h2 id="pinch">Hammer.Pinch</h2>
+            <p>Разпознава се, когато два или повече курсори
+                се приближават (zoom-in) или отдалечават (zoom-out) един
+                от друг.</p>
+
+            <table id="table">
+                <thead>
+                    <tr>
+                        <th>Опция</th>
+                        <th>Стойност по подразбиране</th>
+                        <th>Описание</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>event</td>
+                        <td>pinch</td>
+                        <td>Име на събитието.</td>
+                    </tr>
+                    <tr>
+                        <td>pointers</td>
+                        <td>2</td>
+                        <td>Необходими курсори - най-малко два.</td>
+                    </tr>
+                    <tr>
+                        <td>threshold</td>
+                        <td>0</td>
+                        <td>Минимална скала преди разпознаване.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Съвместими събития</h3>
+            <ul>
+                <li>pinch, заедно с всички изброени отдолу</li>
+                <li>pinchstart</li>
+                <li>pinchmove</li>
+                <li>pinchend</li>
+                <li>pinchcancel</li>
+                <li>pinchin</li>
+                <li>pinchout</li>
+            </ul>
+
+            <h3>Забележки</h3>
+            <p>Този "разпознавател" е неактивен по подразбиране,
+                защото може да предизвика блокирането на елемента.
+                Можете да го активирате като извикате:</p>
+            <div class="textcode">
+                <div class="highlight">
+                    <pre class="highlight"><code><span class="nx">hammertime</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="s1">'pinch'</span><span class="p">).</span><span class="kd">set</span><span class="p">({</span> <span class="na">enable</span><span class="p">:</span> <span class="kc">true</span> <span class="p">});</span>
+</code></pre>
+                </div>
+            </div>
+
+        </div>
+        <hr>
+        <div class="medium-9 columns">
+            <h2 id="press">Hammer.Press</h2>
+            <p>Разпознава се, когато курсорът натиска съответния елемент
+                без да се движи в някаква посока.
+            </p>
+
+            <table id="table">
+                <thead>
+                    <tr>
+                        <th>Опция</th>
+                        <th>Стойност по подразбиране</th>
+                        <th>Описание</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>event</td>
+                        <td>press</td>
+                        <td>Име на събитието.</td>
+                    </tr>
+                    <tr>
+                        <td>pointers</td>
+                        <td>1</td>
+                        <td>Необходими курсори.</td>
+                    </tr>
+                    <tr>
+                        <td>threshold</td>
+                        <td>9</td>
+                        <td>Минимално движение,
+                            което е позволено по време на натискане.</td>
+                    </tr>
+                    <tr>
+                        <td>time</td>
+                        <td>251</td>
+                        <td>Минимално време за натискане в ms.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Съвместими събития</h3>
+            <ul>
+                <li>press</li>
+                <li>pressup</li>
+            </ul>
+
+        </div>
+        <hr>
+        <div class="medium-9 columns">
+            <h2 id="rotate">Hammer.Rotate</h2>
+
+            <p>Разпознава се, когато два или повече курсори се движат
+                с кръгови движения.</p>
+
+            <table id="table">
+                <thead>
+                    <tr>
+                        <th>Опция</th>
+                        <th>Стойност по подразбиране</th>
+                        <th>Описание</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>event</td>
+                        <td>rotate</td>
+                        <td>Име на събитието.</td>
+                    </tr>
+                    <tr>
+                        <td>pointers</td>
+                        <td>2</td>
+                        <td>Необходими курсо - най-малко два.</td>
+                    </tr>
+                    <tr>
+                        <td>threshold</td>
+                        <td>0</td>
+                        <td>Минимално завъртане преди разпознаване.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Съвместими събития</h3>
+            <ul>
+                <li>rotate, заедно с всички изброени отдолу</li>
+                <li>rotatestart</li>
+                <li>rotatemove</li>
+                <li>rotateend</li>
+                <li>rotatecancel</li>
+            </ul>
+
+            <h3>Забележки</h3>
+            <p>Този "разпознавател" е неактивен по подразбиране,
+                защото може да предизвика блокирането на елемента.
+                Можете да го активирате като извикате:</p>
+            <div class="textcode">
+                <div class="highlight">
+                    <pre class="highlight"><code><span class="nx">hammertime</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="s1">'rotate'</span><span class="p">).</span><span class="kd">set</span><span class="p">({</span> <span class="na">enable</span><span class="p">:</span> <span class="kc">true</span> <span class="p">});</span>
+</code></pre>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="medium-9 columns">
+            <h2 id="swipe">Hammer.Swipe</h2>
+            <p>
+                Разпознава се,
+                когато курсорът се движи
+                бързо, с достатъчно разстояние в разрешената посока.</p>
+            <table id="table">
+                <thead>
+                    <tr>
+                        <th>Опция</th>
+                        <th>Стойност по подразбиране</th>
+                        <th>Описание</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>event</td>
+                        <td>swipe</td>
+                        <td>Име на събитието.</td>
+                    </tr>
+                    <tr>
+                        <td>pointers</td>
+                        <td>1</td>
+                        <td>Необходими курсори.</td>
+                    </tr>
+                    <tr>
+                        <td>threshold</td>
+                        <td>10</td>
+                        <td>Минимално необходимо разстояние преди разпознаването.</td>
+                    </tr>
+                    <tr>
+                        <td>direction</td>
+                        <td>DIRECTION_ALL</td>
+                        <td>Посока</td>
+                    </tr>
+                    <tr>
+                        <td>velocity</td>
+                        <td>0.3</td>
+                        <td>Минималната скорост, необходима преди разпознаването,
+                            единицата е px/ms.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h3>Съвместими събития</h3>
+            <ul>
+                <li>swipe, заедно с всички изброени отдолу</li>
+                <li>swipeleft</li>
+                <li>swiperight</li>
+                <li>swipeup</li>
+                <li>swipedown</li>
+            </ul>
+
+            <h3>Забележки</h3>
+            <p> Когато се извика метода <code class="highlighter-rouge">Hammer()</code>,
+                за да се създаде нова инстанция, <em>pan</em> и
+                <em>swipe</em> "разпознавателите" са конфигурирани да прихващат само
+                хоризонтални жестове.</p>
+        </div>
+        <hr>
+        <div class="medium-9 columns">
+            <h2 id="tap">Hammer.Tap</h2>
+            <p>Разпознава се, когато курсорът прави малко натискане/кликване.
+                Различни натискания/кликвания се разпознават,
+                ако възникнат между даден интервал от време и позиция.</p>
+            <table id="table">
+                <thead>
+                    <tr>
+                        <th>Опция</th>
+                        <th>Стойност по подразбиране</th>
+                        <th>Описание</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>event</td>
+                        <td>tap</td>
+                        <td>Име на събитието.</td>
+                    </tr>
+                    <tr>
+                        <td>pointers</td>
+                        <td>1</td>
+                        <td>Необходими курсори.</td>
+                    </tr>
+                    <tr>
+                        <td>taps</td>
+                        <td>1</td>
+                        <td>Брой на изискваните натискания/кликвания.</td>
+                    </tr>
+                    <tr>
+                        <td>interval</td>
+                        <td>300</td>
+                        <td>Максимално време в ms между натисканията/кликванията.</td>
+                    </tr>
+                    <tr>
+                        <td>time</td>
+                        <td>250</td>
+                        <td>Максимално време за натискане в ms.</td>
+                    </tr>
+                    <tr>
+                        <td>threshold</td>
+                        <td>2</td>
+                        <td>Докато натискате/кликвате, други движения са допустими.</td>
+                    </tr>
+                    <tr>
+                        <td>posThreshold</td>
+                        <td>10</td>
+                        <td>Максималната разлика в позициите между множество
+                            натискания/кликвания.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h3>Съвместими събития</h3>
+            <ul>
+                <li>tap</li>
+            </ul>
+        </div>
+        <hr>
+        <div class="medium-9 columns">
+            <h1 id="literature">Цитирана литература</h1>
+            <div class="comments">
+                <p>[1] <a href="https://hammerjs.github.io/getting-started/", target="_blank">hammerjs.github.io/getting-started</a>,
+                    Основна информация за HammerJS</p>
+                <p>[2] <a href="http://hammerjs.github.io/browser-support/", target="_blank">hammerjs.github.io/browser-support</a>,
+                    Браузъри, които поддържат HammerJS</p>
+                <p>[3] <a href="http://hammerjs.github.io/touch-action/", target="_blank">hammerjs.github.io/touch-action</a>,
+                    Touch-действие за HammerJS</p>
+                <p>[4] <a href="http://hammerjs.github.io/require-failure/", target="_blank">hammerjs.github.io/require-failure</a>,
+                    Основни проблеми при използването на HammerJS</p>
+                <p>[5] <a href="http://hammerjs.github.io/tips/", target="_blank">hammerjs.github.io/tips</a>,
+                    Съвети и добри практики при използването на HammerJS</p>
+                <p>[6] <a href="https://swipe.js.org/", target="_blank">swipe.js.org</a>,
+                    SwipeJS</p>
+                <p>[7] <a href="https://interactjs.io/docs/", target="_blank">interactjs.io/docs</a>,
+                    InteractJS</p>
+                <p>[8] <a href="https://www.awwwards.com/websites/hammer-js/", target="_blank">www.awwwards.com/websites/hammer-js</a>,
+                    Сайтове, използващи HammerJS</p>
+                <p>[9] <a href="https://www.wappalyzer.com/technologies/hammer-js", target="_blank">www.wappalyzer.com/technologies/hammer-js</a>,
+                    Сайтове, използващи HammerJS</p>
+            </div>
+        </div>
+        <hr>
+        <div class="medium-9 columns">
+            <h1 id="about">За мен</h1>
+            <div class="infome">
+                <p>1. Име: Боряна Начева</p>
+                <p>2. ФН: 62105</p>
+                <p>3. Курс: Софтуерно инженерство</p>
+                <p>4. Преподавател: доц. М. Петров</p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

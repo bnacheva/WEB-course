@@ -1,0 +1,133 @@
+body {
+    font-family: cursive;
+    background-color: #F0F8FF;
+}
+
+.sidenav {
+    height: 100%;
+    width: 275px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #6fa8dc;
+    overflow-x: hidden;
+    padding-top: 15px;
+}
+
+.sidenav a {
+    padding: 2px 2px 2px 32px;
+    text-decoration: none;
+    font-size: 17px;
+    color: black;
+    display: block;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    outline: none;
+}
+
+.sidenav a:hover {
+    color: #F0F8FF;
+}
+
+.submenu a {
+    font-size: 14px;
+}
+
+.main {
+    margin-left: 300px;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+    .sidenav a {
+        font-size: 14px;
+    }
+}
+
+.textcode {
+    background-color: white;
+    border: 1px solid black;
+}
+
+#table {
+    font-family: cursive;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#table td, #table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#table tr:hover {
+    background-color: #ddd;
+}
+
+#table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}
+
+img {
+    width: 100px;
+    height: 100px;
+}
+
+#imgp {
+    font-size: 12px; 
+    font-style: italic
+}
+
+.recognizer {
+    width: 100%;
+    height: 400px;
+}
+
+.logo {
+    height: 100px;
+    width: 100px;
+    position: absolute;
+    animation: Logo 5s linear infinite;
+    -webkit-animation: Logo 5s linear infinite;
+    -moz-animation: Logo 5s linear infinite;
+    -ms-animation: Logo 5s linear infinite;
+    -o-animation: Logo 5s linear infinite;
+}
+
+@keyframes Logo {
+    from {
+        left: 0px;
+    }
+    50% {
+        left: 100%;
+    }
+    to {
+        left: 0px;
+    }
+}
+
+@-webkit-keyframes Logo {
+    from {
+        left: 0px;
+    }
+    50% {
+        left: 100%;
+    }
+    to {
+        left: 0px;
+    }
+}
